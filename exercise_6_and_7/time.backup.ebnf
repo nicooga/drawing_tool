@@ -1,0 +1,11 @@
+<time>   ::= <24time> | <12time>
+
+<24time> ::= <24hour> ":" <minute>
+<24hour> ::= <digit> | [0-1] <digit> | "2" [0-3]
+
+<12time> ::= <12hour> ":" <minute> <ampm>
+<12hour> ::= <digit> | "0" <digit> | "1" [0-2]
+<ampm>   ::= "am" | "pm"
+
+<minute> ::= [0-5] <digit>
+<digit>  ::= [0-9]

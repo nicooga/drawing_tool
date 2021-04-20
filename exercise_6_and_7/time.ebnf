@@ -1,8 +1,11 @@
-<time> ::= <24time> | <12time>;
-<24time> ::= <24hour> ":" <minute>;
-<12time> ::= <12hour> ":" <minute> <ampm>;
-<ampm> ::= "am" | "pm";
-<24hour> ::= <digit> | [0-1] <digit> | "2" [0-3];
-<12hour> ::= <digit> | "0" <digit> | "1" [0-2];
-<minute> ::= [0-5] <digit>:
-<digit> ::= [0-9];
+time             ::= military_time | twelve_hour_time
+
+military_time    ::= military_time ":" minute
+military_hour    ::= digit | [0-1] digit | ("2" [0-3])
+
+twelve_hour_time ::= twelve_hour_hour ":" minute ampm
+twelve_hour_hour ::= digit | "0" digit | ("1" [0-2])
+ampm             ::= "am" | "pm"
+
+minute           ::= [0-5] digit
+digit            ::= [0-9]

@@ -5,6 +5,7 @@
   "license": "MIT",
   "type": "module",
   "dependencies": {
-    "ebnf": "^1.9.0"
+    "ebnf": "^1.9.0",
+    "pegjs": "^0.10.0"
   }
 }

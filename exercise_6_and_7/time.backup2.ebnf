@@ -1,0 +1,12 @@
+<time>               ::= <military_time> | <twelve_hour_time>
+
+<military_time>      ::= <military_hour> ":" <minute>
+<military_hour>      ::= <digit> | "0" <digit> | "1" <digit> | "20" | "21" | "22" | "23"
+
+<twelve_hour_time>   ::= <twelve_hour_hour> ":" <minute> <ampm>
+<twelve_hour_hour>   ::= <digit> | "0" <digit> | "10" | "11"
+<ampm>               ::= "am" | "pm"
+
+<minute>             ::= <minute_first_digit> <digit>
+<minute_first_digit> ::= "0" | "1" | "2" | "3" | "4" | "5"
+<digit>              ::= "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9"
