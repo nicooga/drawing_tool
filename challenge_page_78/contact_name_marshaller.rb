@@ -5,15 +5,15 @@ class ContactNameMarshaller
     acc.merge(letter => index)
   end
 
-  def initialize(name, file)
-    self.name = name
-    self.file = file
+  if (CHARACTERS.size > (2 ** 5) - 1)
+    raise 'Valid characters size can not exceede `2^5 - 1`, as we are storing them using only the first 5 bytes in an 8 bit integer'
   end
 
-  def dump(file)
-    5.down_to(1) do |n|
-      file.puts
-    end
+  def initialize(name)
+    self.name = name
+  end
+
+  def dump
   end
 
   private

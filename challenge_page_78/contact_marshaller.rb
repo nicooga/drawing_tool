@@ -3,15 +3,18 @@ require_relative 'phone_number_marshaller.rb'
 
 class ContactMarshaller
   def initialize(contact)
-    self.contact_name_marshaller = ContactNameMarshaller.new(contact.name, file)
-    self.phone_number_marshaller = PhoneNumberMarshaller.new(contact.phone_number, file)
+    self.contact_name_marshaller = ContactNameMarshaller.new(contact.name)
+    self.phone_number_marshaller = PhoneNumberMarshaller.new(contact.phone_number)
   end
 
   private
 
   def dump
-    ContactNameMarshaller.dump(file)
+    [
+      contact_name_marshaller.dump,
+      phone_number_marshaller.dump
+    ]
   end
 
-  attr_accessor :contact_name_marshaller, :file
+  attr_accessor :contact_name_marshaller, :phone_number_marshaller
 end

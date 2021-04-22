@@ -1,6 +1,3 @@
-# Objective: design an adress book database (name, phone number, etc) using a binary representation
-require_relative 'contact_marshaller.rb'
-
 class Contact
   attr_accessor :name, phone_number
 
@@ -32,24 +29,3 @@ class Contact
     def message = 'Contact name is too long'
   end
 end
-
-
-class ContactRepository
-  def initialize
-    self.file = File.open("./database", "a+b")
-  end
-
-  def persist(contact)
-    ContactMarshaller.new(contact, file).dump
-  end
-
-  def find_by_name(name)
-  end
-
-  def find_by_phone_number(phone_number)
-  end
-end
-
-contact_repository = ContactRepository.new
-contact = Contact.new('Ricardo Arjona', '1524088205');
-contact_repository.persist(contact)
