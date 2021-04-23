@@ -1,5 +1,5 @@
 class Contact
-  attr_accessor :name, phone_number
+  attr_accessor :name, :phone_number
 
   def initialize(name, phone_number)
     self.name = name
@@ -10,7 +10,7 @@ class Contact
   private
 
   def validate!
-    raise NameMissingError, self unless name && name.strip.length == 0
+    raise NameMissingError, self if !name || name.strip.length == 0
   end
 
   class ValidationError < StandardError
