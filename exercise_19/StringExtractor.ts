@@ -67,7 +67,7 @@ abstract class StringExtractorState {
       this.onCharFound,
       this.onStringFinished
     ] = args;
-  }; 
+  }
 
   abstract consume(char: string): void;
 }
@@ -75,43 +75,59 @@ abstract class StringExtractorState {
 class LookingForStringState extends StringExtractorState {
   consume(char: string): void {
     if (char === ESCAPE_CHAR) {
-      this.onStateChanged(LookingForStringAndEscapingState);
+      this.changeState(LookingForStringAndEscapingState);
       return;
     }
 
     if (char === QUOTE) {
-      this.onStateChanged(InStringState);
+      this.changeState(InStringState);
       return;
     }
+  }
+
+  private changeState(newStateConstructor: typeof LookingForStringAndEscapingState | typeof InStringState): void {
+    this.onStateChanged(newStateConstructor);
   }
 }
 
 class LookingForStringAndEscapingState extends StringExtractorState {
   consume(_char: string): void {
-    return this.onStateChanged(LookingForStringState);
+    return this.changeState(LookingForStringState);
+  }
+
+  private changeState(newStateConstructor: typeof LookingForStringState) {
+    this.onStateChanged(newStateConstructor);
   }
 }
 
 class InStringState extends StringExtractorState {
   consume(char: string): void {
     if (char === ESCAPE_CHAR) {
-      this.onStateChanged(InStringAndEscapingState);
+      this.changeState(InStringAndEscapingState);
       return;
     }
 
     if (char === QUOTE) {
       this.onStringFinished();
-      this.onStateChanged(LookingForStringState);
+      this.changeState(LookingForStringState);
       return;
     }
 
     this.onCharFound(char);
+  }
+
+  private changeState(newStateConstructor: typeof InStringAndEscapingState | typeof LookingForStringState) {
+    this.onStateChanged(newStateConstructor);
   }
 }
 
 class InStringAndEscapingState extends StringExtractorState {
   consume(char: string): void {
     this.onCharFound(char);
-    this.onStateChanged(InStringState);
+    this.changeState(InStringState);
+  }
+
+  private changeState(newStateConstructor: typeof InStringState) {
+    this.onStateChanged(newStateConstructor);
   }
 }
