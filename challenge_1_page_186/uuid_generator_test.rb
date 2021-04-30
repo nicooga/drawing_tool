@@ -1,21 +1,24 @@
-require 'test/unit'
+require 'test/unit/testcase'
 require 'set'
 
 require_relative 'uuid_generator'
 
 class UUIDGeneratorTest < Test::Unit::TestCase
   CONCURRENT_USERS = 10
-  ITERATIONS = 1000
+  ITERATIONS = 100
 
   def test_it_works
-    generator = UUIDGenerator.new
+    generator = create_generator
 
-    assert generator.generate == 1
-    assert generator.generate == 2
+    1.upto(10) do |expected_id|
+      assert_equal expected_id, generator.generate
+    end
+
+    generator.stop
   end
 
   def test_concurrency
-    generator = UUIDGenerator.new
+    generator = create_generator
 
     ITERATIONS.times do |i|
       generated_ids = Set.new
@@ -50,5 +53,13 @@ class UUIDGeneratorTest < Test::Unit::TestCase
         )
       end
     end
+
+    generator.stop
+  end
+
+  private
+
+  def create_generator
+    UUIDGenerator.new
   end
 end
