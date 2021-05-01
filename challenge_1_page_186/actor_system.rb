@@ -3,6 +3,7 @@ require 'securerandom'
 class ActorSystem
   def initialize()
     @actors = {}
+    @actor_threads = {}
   end
 
   def add_actor(&process_message)
@@ -47,10 +48,15 @@ class ActorSystem::Actor
     return if @stopped
 
     loop do
+      if @mailbox.empty? && @stopped
+        break
+      end
+
       if @mailbox.empty?
         Thread.pass
         next
       end
+
       next_message = @mailbox.shift
       @state = instance_exec(next_message, @state, &@process_message)
     end
