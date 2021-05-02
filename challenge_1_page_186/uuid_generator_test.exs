@@ -1,6 +1,6 @@
 ExUnit.start()
 
-defmodule UUUIDGeneratorTest do
+defmodule UUIDGeneratorTest do
   use ExUnit.Case
 
   @concurrency 10
